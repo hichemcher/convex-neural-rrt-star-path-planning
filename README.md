@@ -121,7 +121,7 @@ Download the pre-trained UNet weights and place them in the repo root:
 best_path_mode_multipoint_224.pth
 ```
 
-> 🔗 **[Download weights — add your Kaggle/Drive/Zenodo link here]**
+> 🔗 **[https://drive.google.com/file/d/1ncF-791ODRMvjfGZ0Z17V8Ok_wm8zUHs/view?usp=sharing]**
 
 The model was trained on 4,000 procedurally generated 224×224 maps with 40,000 start–goal pairs using Adam (lr=1e-3, 100 epochs, batch=128, cross-entropy loss with class-balancing).
 

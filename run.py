@@ -37,8 +37,8 @@ def parse_args():
     p.add_argument("--seed",      type=int, default=0,   help="Random seed")
     p.add_argument("--num_shapes",type=int, default=75,  help="Number of obstacles on the map")
     p.add_argument("--max_iter",  type=int, default=1500,help="Max RRT* iterations")
-    p.add_argument("--alpha_in",  type=float, default=0.5)
-    p.add_argument("--alpha_out", type=float, default=0.2)
+    p.add_argument("--alpha_pred",  type=float, default=0.5)
+    p.add_argument("--alpha_explore", type=float, default=0.2)
     p.add_argument("--step_size", type=float, default=10.0)
     p.add_argument("--output",    default="result.png",  help="Output image path")
     return p.parse_args()
@@ -161,8 +161,8 @@ def main():
         conv_pts_all = conv_pts_all,
         pred_conv    = pred_conv,
         conv_pts     = conv_pts_all,
-        alpha_in     = args.alpha_in,
-        alpha_out    = args.alpha_out,
+        alpha_pred     = args.alpha_pred,
+        alpha_explore    = args.alpha_explore,
         max_iter     = args.max_iter,
         step_size    = args.step_size,
         N            = 400,

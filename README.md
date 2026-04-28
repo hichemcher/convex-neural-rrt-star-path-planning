@@ -216,7 +216,7 @@ If you use this code in your research, please cite:
              Chouraqui, Samira and Emran, Bara J.},
   journal = {IEEE Access},
   year    = {2024},
-  doi     = {10.1109/ACCESS.2024.0429000}
+  doi     = {In Review}
 }
 ```
 

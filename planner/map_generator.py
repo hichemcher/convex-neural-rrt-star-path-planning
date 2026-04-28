@@ -2,7 +2,7 @@
 map_generator.py
 ================
 Random occupancy map generation utilities used for training and testing
-the hybrid_rrt_convex_alpha_out planner.
+the convex_neural_rrt_star planner.
 
 Generates 224×224 binary grids populated with random convex (and optionally
 concave) polygon obstacles, along with valid start/goal pairs that are
@@ -176,7 +176,7 @@ def _has_line_of_sight(grid, p0, p1):
 
 def _calculate_local_tangents(grid, corner_mask, s):
     """Return a mask of corners visible from point s."""
-    from planner.hybrid_rrt_convex_alpha_out import is_collision_free_nb
+    from planner.convex_neural_rrt_star import is_collision_free_nb
     local_mask = np.zeros_like(grid, dtype=np.uint8)
     for y, x in np.argwhere(corner_mask > 0):
         if is_collision_free_nb(grid, s[1], s[0], x, y):

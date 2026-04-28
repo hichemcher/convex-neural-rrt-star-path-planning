@@ -151,8 +151,8 @@ def convex_neural_rrt_star(
     conv_pts_all,
     pred_conv,
     conv_pts,
-    alpha_in=0.5,
-    alpha_out=0.2,
+    alpha_pred=0.5,
+    alpha_explore=0.2,
     max_iter=500,
     step_size=10,
     N=400,
@@ -163,8 +163,8 @@ def convex_neural_rrt_star(
 
     Combines neural network predicted path points with obstacle convex corner
     points, separated by a convex hull boundary around the predicted path.
-    Points inside the hull are sampled with probability alpha_in, while
-    outside points (providing exploration) are sampled with alpha_out.
+    Points inside the hull are sampled with probability alpha_pred, while
+    outside points (providing exploration) are sampled with alpha_explore.
     Early stopping is applied when path cost converges.
 
     Parameters
@@ -175,8 +175,8 @@ def convex_neural_rrt_star(
     conv_pts_all : list of (row, col)  — all detected convex corner points
     pred_conv    : list of (row, col)  — neural network predicted path points
     conv_pts     : list of (row, col)  — convex corner points (subset of conv_pts_all)
-    alpha_in     : float               — sampling probability for inside-hull corners
-    alpha_out    : float               — sampling probability for outside-hull corners
+    alpha_pred     : float               — sampling probability for inside-hull corners
+    alpha_explore    : float               — sampling probability for outside-hull corners
     max_iter     : int                 — maximum RRT* iterations
     step_size    : float               — maximum steer step size (pixels)
     N            : int                 — window size for early stopping check
@@ -189,7 +189,7 @@ def convex_neural_rrt_star(
     nodes           : list of Node     — all tree nodes
     pred_points     : list of (row, col) — sampled predicted path points (for analysis)
     sample_points   : list of (row, col) — sampled inside-hull corner points (for analysis)
-    sampled_out_pts : list of (row, col) — sampled outside-hull corner points (for analysis)
+    sampled_explore_pts : list of (row, col) — sampled outside-hull corner points (for analysis)
     """
 
     # ── Shortcut: direct line of sight ──────────────────────────────────────
@@ -202,7 +202,7 @@ def convex_neural_rrt_star(
 
     conv_pts = np.array(conv_pts)
     pred_conv = np.array(pred_conv)
-    pred_points, sample_points, sampled_out_pts = [], [], []
+    pred_points, sample_points, sampled_explore_pts = [], [], []
 
     # ── Exclude predicted points from corner set ─────────────────────────────
     pred_set = set(map(tuple, pred_conv))
@@ -235,18 +235,18 @@ def convex_neural_rrt_star(
             # Goal bias
             target = goal
 
-        elif r < 0.1 + alpha_out:
+        elif r < 0.1 + alpha_explore:
             # Explore outside hull
             if outside_pts:
                 target = random.choice(outside_pts)
-                sampled_out_pts.append(target)
+                sampled_explore_pts.append(target)
             else:
                 target = sample_free(grid)
 
         else:
             # Sample inside hull
             r2 = random.random()
-            if r2 < alpha_in and len(pred_conv) > 0:
+            if r2 < alpha_pred and len(pred_conv) > 0:
                 target = tuple(random.choice(pred_conv))
                 pred_points.append(target)
             elif inside_pts:
@@ -311,4 +311,4 @@ def convex_neural_rrt_star(
 
     # ── Build and return path ────────────────────────────────────────────────
     path = build_path_from_goal(goal_node) if goal_node.parent else []
-    return path, best_cost_history, nodes, pred_points, sample_points, sampled_out_pts
+    return path, best_cost_history, nodes, pred_points, sample_points, sampled_explore_pts

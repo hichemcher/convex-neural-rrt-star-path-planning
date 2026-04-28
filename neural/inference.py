@@ -11,7 +11,7 @@ Typical pipeline
     conv_mask   = detect_convex_corners(grid == 1)
     pred_conv   = get_predicted_convex_points(model, tensor, conv_mask)
     conv_pts    = [tuple(p) for p in np.argwhere(conv_mask)]
-    path, *_    = hybrid_rrt_convex_alpha_out(grid, start, goal,
+    path, *_    = convex_neural_rrt_star(grid, start, goal,
                       conv_pts_all=conv_pts, pred_conv=pred_conv, conv_pts=conv_pts)
 """
 

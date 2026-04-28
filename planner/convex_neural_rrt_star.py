@@ -1,13 +1,14 @@
 """
-hybrid_rrt_convex_alpha_out.py
+convex_neural_rrt_star.py
 ================================
 Implementation of the Hybrid RRT* with Convex-Hull-Guided Sampling algorithm,
 as proposed in the paper:
 
     "Neural-Guided RRT* with Adaptive Convex Hull Sampling for Robot Path Planning"
 
-Algorithm: hybrid_rrt_convex_alpha_out
-Author: [Your Name]
+Algorithm: convex_neural_rrt_star
+Author: Hichem Cheriet
+University: USTO-MB
 """
 
 import math
@@ -143,7 +144,7 @@ def build_path_from_goal(goal_node):
 
 # ─── Main Algorithm ────────────────────────────────────────────────────────────
 
-def hybrid_rrt_convex_alpha_out(
+def convex_neural_rrt_star(
     grid,
     start,
     goal,

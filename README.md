@@ -91,8 +91,8 @@ Occupancy Grid (224×224)
 ├── demo.gif                             ← Planner animation
 │
 ├── planner/
-│   ├── __init__.py
-│   ├── hybrid_rrt_convex_alpha_out.py  ← Convex-Neural RRT* core algorithm
+│   ├── __predit__.py
+│   ├── convex_neural_rrt_star.py  ← Convex-Neural RRT* core algorithm
 │   └── map_generator.py                ← Random map generation + LTA* planner
 │
 └── neural/
@@ -140,8 +140,8 @@ python run.py \
   --seed       42 \
   --num_shapes 75 \       # obstacle count (75-80 = hard density)
   --max_iter   1000 \
-  --alpha_in   0.5 \      # αpred  in the paper
-  --alpha_out  0.2 \      # αexplore in the paper
+  --alpha_pred   0.5 \      # αpred  in the paper
+  --alpha_explore  0.2 \      # αexplore in the paper
   --step_size  5 \
   --output     result.png
 ```
@@ -152,7 +152,7 @@ python run.py \
 
 ```python
 import numpy as np
-from planner import generate_map, generate_start_goal, hybrid_rrt_convex_alpha_out
+from planner import generate_map, generate_start_goal, convex_neural_rrt_star
 from neural import load_model, grid_to_tensor, detect_convex_corners, get_predicted_convex_points
 
 # 1. Generate map
@@ -173,15 +173,15 @@ conv_pts_all = [tuple(p) for p in np.argwhere(convex_mask > 0)]
 pred_conv    = [tuple(p) for p in get_predicted_convex_points(model, tensor, convex_mask)]
 
 # 4. Plan
-path, cost_history, nodes, *_ = hybrid_rrt_convex_alpha_out(
+path, cost_history, nodes, *_ = convex_neural_rrt_star(
     grid         = labelled,
     start        = start,
     goal         = goal,
     conv_pts_all = conv_pts_all,
     pred_conv    = pred_conv,   # Cp in the paper
     conv_pts     = conv_pts_all,
-    alpha_in     = 0.5,         # αpred
-    alpha_out    = 0.2,         # αexplore
+    alpha_pred     = 0.5,         # αpred
+    alpha_explore    = 0.2,         # αexplore
     max_iter     = 1000,
     step_size    = 5,
 )
@@ -195,8 +195,8 @@ print(f"✅ Path: {len(path)} waypoints | Cost: {cost_history[-1]:.2f}")
 
 | Parameter | Paper notation | Default | Description |
 |:---|:---:|:---:|:---|
-| `alpha_in` | αpred | 0.5 | Sampling probability for predicted convex corners (inside hull) |
-| `alpha_out` | αexplore | 0.2 | Sampling probability for corners outside hull (global exploration) |
+| `alpha_pred` | αpred | 0.5 | Sampling probability for predicted convex corners (inside hull) |
+| `alpha_explore` | αexplore | 0.2 | Sampling probability for corners outside hull (global exploration) |
 | `max_iter` | Nmax | 1000 | Maximum RRT\* iterations |
 | `step_size` | δs | 5 | Steer step length (pixels) |
 | `N` | ts | 400 | Early-stopping window (iterations) |

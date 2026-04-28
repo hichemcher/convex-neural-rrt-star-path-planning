@@ -5,7 +5,7 @@ End-to-end demo:
   1. Generate a random 224×224 map
   2. Load the trained UNet
   3. Run inference to get predicted path points
-  4. Run hybrid_rrt_convex_alpha_out
+  4. Run convex_neural_rrt_star
   5. Visualise and save the result
 
 Usage
@@ -15,8 +15,6 @@ Usage
 """
 
 import argparse
-import os
-import urllib.request
 import random
 import numpy as np
 import matplotlib
@@ -27,21 +25,7 @@ import torch
 from planner.map_generator import generate_map, generate_start_goal
 from neural.model import load_model, DEVICE
 from neural.inference import grid_to_tensor, detect_convex_corners, get_predicted_convex_points
-from planner.hybrid_rrt_convex_alpha_out import hybrid_rrt_convex_alpha_out
-
-# ─── Model download ─────────────────────────────────────────────────────────
-
-def download_weights_if_needed(path):
-    if os.path.exists(path):
-        return
-
-    print("Downloading model weights...")
-
-    url = "https://drive.google.com/file/d/1ncF-791ODRMvjfGZ0Z17V8Ok_wm8zUHs/view?usp=sharing"
-
-    urllib.request.urlretrieve(url, path)
-
-    print("Weights downloaded")
+from planner.convex_neural_rrt_star import convex_neural_rrt_star
 
 
 # ─── Argument parsing ─────────────────────────────────────────────────────────
@@ -150,9 +134,8 @@ def main():
     print(f"  Start: {start}   Goal: {goal}")
 
     # 2. Load model
-    download_weights_if_needed(args.weights)
     model = load_model(args.weights, device=DEVICE)
-   
+
     # 3. Encode grid and run inference
     print("Running UNet inference …")
     labelled = grid.copy().astype(np.int32)
@@ -170,8 +153,8 @@ def main():
     print(f"  Predicted conv. pts: {len(pred_conv)}   All corners: {len(conv_pts_all)}")
 
     # 4. Run planner
-    print("Running hybrid_rrt_convex_alpha_out …")
-    path, cost_history, nodes, pred_pts, inside_pts, outside_pts = hybrid_rrt_convex_alpha_out(
+    print("Running convex_neural_rrt_star …")
+    path, cost_history, nodes, pred_pts, inside_pts, outside_pts = convex_neural_rrt_star(
         grid         = labelled,
         start        = start,
         goal         = goal,

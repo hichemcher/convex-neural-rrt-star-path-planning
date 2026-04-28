@@ -1,2 +1,2 @@
-from .hybrid_rrt_convex_alpha_out import hybrid_rrt_convex_alpha_out
+from .convex_neural_rrt_star import convex_neural_rrt_star
 from .map_generator import generate_map, generate_start_goal

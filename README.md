@@ -4,7 +4,9 @@
 <h3>Fast and Reliable Learning-Guided Sampling for High-Quality Robot Path Planning</h3>
 
 <p>
-  <a href="[[10.1109/ACCESS.2026.3703346](https://ieeexplore.ieee.org/document/11559593)](https://ieeexplore.ieee.org/document/11559593)"><img src="https://img.shields.io/badge/IEEE%20Access-10.1109%2FACCESS.2024.0429000-00629B?style=for-the-badge&logo=ieee&logoColor=white"/></a>
+<a href="https://doi.org/10.1109/ACCESS.2026.3703346">
+  <img src="https://img.shields.io/badge/IEEE%20Access-10.1109%2FACCESS.2026.3703346-00629B?style=for-the-badge&logo=ieee&logoColor=white"/>
+</a>
   <a href="https://www.python.org/"><img src="https://img.shields.io/badge/Python-3.8%2B-3776AB?style=for-the-badge&logo=python&logoColor=white"/></a>
   <a href="https://pytorch.org/"><img src="https://img.shields.io/badge/PyTorch-2.0%2B-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white"/></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-22c55e?style=for-the-badge"/></a>

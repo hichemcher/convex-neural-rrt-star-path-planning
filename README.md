@@ -209,15 +209,19 @@ print(f"✅ Path: {len(path)} waypoints | Cost: {cost_history[-1]:.2f}")
 If you use this code in your research, please cite:
 
 ```bibtex
+
 @article{cheriet2024convexneural,
-  title   = {Convex-Neural {RRT*}: Fast and Reliable Learning-Guided Sampling
-             for High-Quality Robot Path Planning},
-  author  = {Cheriet, Hichem and Khellat Kihel, Badra and
-             Chouraqui, Samira and Emran, Bara J.},
-  journal = {IEEE Access},
-  year    = {2024},
-  doi     = {In Review}
+  author={Cheriet, Hichem and Kihel, Badra Khellat and Chouraqui, Samira and Emran, Bara J.},
+  journal={IEEE Access}, 
+  title={Convex-Neural RRT*: Fast and Reliable Learning-Guided Sampling for High-Quality Robot Path Planning}, 
+  year={2026},
+  volume={},
+  number={},
+  pages={1-1},
+  keywords={Path planning;Modeling;Learning (artificial intelligence);Algorithms;Costing;Costs;Optimization;Timing;Media;Training;Autonomous navigation;Learning-based planning;Neural motion planning;RRT*},
+  doi={10.1109/ACCESS.2026.3703346}
 }
+
 ```
 
 ---
